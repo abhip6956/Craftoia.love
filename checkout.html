@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="checkout-layout">
+  <div class="form-card"><p class="eyebrow">ALMOST THERE</p><h1>Checkout</h1>
+    <form method="post" class="form">
+      <label>Full name<input name="customer_name" value="{{ session.get('name','') }}" required></label>
+      <label>Delivery address<textarea name="address" rows="3" required></textarea></label>
+      <label>Phone number<input name="phone" type="tel" required></label>
+      <p class="muted">Payment method: Cash on Delivery (demo)</p>
+      <button class="button full" type="submit">Place order · ₹{{ "%.2f"|format(total) }}</button>
+    </form>
+  </div>
+  <aside class="summary-card"><h2>Order summary</h2>{% for product, quantity, subtotal in items %}<p>{{ product.name }} × {{ quantity }} <strong>₹{{ "%.2f"|format(subtotal) }}</strong></p>{% endfor %}<hr><h2>Total ₹{{ "%.2f"|format(total) }}</h2></aside>
+</section>
+{% endblock %}

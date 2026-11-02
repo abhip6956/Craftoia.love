@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Manager Login' if manager else 'Customer Login' }} · Craftoria.love{% endblock %}
+{% block content %}
+<section class="form-card">
+  <p class="eyebrow">{{ 'MANAGER ACCESS' if manager else 'WELCOME BACK' }}</p>
+  <h1>{{ 'Manager login' if manager else 'Customer login' }}</h1>
+  <p class="muted">{{ 'Sign in to manage your store.' if manager else 'Log in to continue shopping.' }}</p>
+  <form method="post" class="form">
+    <label>Email address<input type="email" name="email" required></label>
+    <label>Password<input type="password" name="password" required></label>
+    <button class="button full" type="submit">Login</button>
+  </form>
+  {% if not manager %}<p class="form-foot">New here? <a href="{{ url_for('register') }}">Create an account</a></p>{% endif %}
+</section>
+{% endblock %}

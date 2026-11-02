@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">HANDMADE · THOUGHTFUL · UNIQUE</p>
+    <h1>Little things.<br><span>Lots of love.</span></h1>
+    <p class="lead">Discover lovely handmade gifts and creative pieces made to make everyday moments special.</p>
+    <a class="button" href="#products">Explore products</a>
+  </div>
+  <div class="hero-art"><div class="art-circle">♡</div><p>Made with love</p></div>
+</section>
+<div class="section-heading" id="products">
+  <div><p class="eyebrow">OUR COLLECTION</p><h2>Featured products</h2></div>
+  <span class="muted">{{ products|length }} products</span>
+</div>
+<div class="product-grid">
+{% for product in products %}
+  <article class="product-card">
+    {% if product.image_url %}
+      <img class="product-image" src="{{ product.image_url }}" alt="{{ product.name }}">
+    {% else %}
+      <div class="product-placeholder">♡</div>
+    {% endif %}
+    <div class="product-info">
+      <h3>{{ product.name }}</h3>
+      <p class="muted">{{ product.description }}</p>
+      <div class="product-bottom"><strong>₹{{ "%.2f"|format(product.price) }}</strong><span>{{ product.stock }} in stock</span></div>
+      <div class="actions">
+        <a class="button secondary" href="{{ url_for('product_detail', product_id=product.id) }}">Details</a>
+        <form method="post" action="{{ url_for('add_to_cart', product_id=product.id) }}">
+          <button class="button" type="submit" {% if product.stock < 1 %}disabled{% endif %}>Add to cart</button>
+        </form>
+      </div>
+    </div>
+  </article>
+{% else %}
+  <p>No products are available right now.</p>
+{% endfor %}
+</div>
+{% endblock %}

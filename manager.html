@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Manager Dashboard · Craftoria.love{% endblock %}
+{% block content %}
+<div class="manager-head"><div><p class="eyebrow">STORE CONTROL CENTRE</p><h1>Manager dashboard</h1><p class="muted">Welcome, {{ session.get('name') }}.</p></div><a class="button" href="{{ url_for('add_product') }}">+ Add product</a></div>
+<div class="stats"><div class="stat"><span>Products</span><strong>{{ products|length }}</strong></div><div class="stat"><span>Customers</span><strong>{{ customers }}</strong></div><div class="stat"><span>Orders</span><strong>{{ orders|length }}</strong></div><div class="stat"><span>Order value</span><strong>₹{{ "%.0f"|format(total_sales) }}</strong></div></div>
+<h2>Manage products</h2><div class="table-wrap"><table><tr><th>Product</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+{% for p in products %}<tr><td>{{ p.name }}</td><td>₹{{ "%.2f"|format(p.price) }}</td><td>{{ p.stock }}</td><td class="inline-actions"><a href="{{ url_for('edit_product', product_id=p.id) }}">Edit</a><form method="post" action="{{ url_for('delete_product', product_id=p.id) }}" onsubmit="return confirm('Delete this product?')"><button class="link-button" type="submit">Delete</button></form></td></tr>{% endfor %}</table></div>
+<h2 class="spaced">Customer orders</h2><div class="table-wrap"><table><tr><th>Order</th><th>Customer</th><th>Address</th><th>Total</th><th>Status</th><th>Update</th></tr>
+{% for o in orders %}<tr><td>#{{ o.id }}<br><small>{{ o.created_at }}</small></td><td>{{ o.customer_name }}<br><small>{{ o.email }} · {{ o.phone }}</small></td><td>{{ o.address }}</td><td>₹{{ "%.2f"|format(o.total) }}</td><td>{{ o.status }}</td><td><form method="post" action="{{ url_for('update_order_status', order_id=o.id) }}" class="status-form"><select name="status">{% for s in ['Placed','Processing','Shipped','Delivered','Cancelled'] %}<option value="{{ s }}" {% if o.status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select><button class="button small" type="submit">Save</button></form></td></tr>{% else %}<tr><td colspan="6">No orders yet.</td></tr>{% endfor %}</table></div>
+{% endblock %}

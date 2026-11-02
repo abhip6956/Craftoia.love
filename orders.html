@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block content %}<p class="eyebrow">YOUR PURCHASES</p><h1>My orders</h1>
+{% if orders %}<div class="table-wrap"><table><tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th></tr>{% for order in orders %}<tr><td>#{{ order.id }}</td><td>{{ order.created_at }}</td><td>₹{{ "%.2f"|format(order.total) }}</td><td><span class="status">{{ order.status }}</span></td></tr>{% endfor %}</table></div>
+{% else %}<div class="empty-state"><h2>No orders yet</h2><a class="button" href="{{ url_for('home') }}">Start shopping</a></div>{% endif %}{% endblock %}
