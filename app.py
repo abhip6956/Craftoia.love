@@ -7,7 +7,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "craftoria.db"
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=".", static_folder=".")
 app.secret_key = "change-this-secret-key-before-publishing"
 
 
@@ -77,6 +77,9 @@ def init_db():
         )
     conn.commit()
     conn.close()
+
+# Is line se Render par start hote hi database aur table automatic ban jayegi
+init_db()
 
 
 def customer_required(view):
