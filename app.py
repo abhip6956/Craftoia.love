@@ -7,7 +7,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "craftoria.db"
 
-app = Flask(__name__, template_folder=".", static_folder=".")
+aapp = Flask(__name__, template_folder=".", static_folder=".", static_url_path="/static")
 app.secret_key = "change-this-secret-key-before-publishing"
 
 
